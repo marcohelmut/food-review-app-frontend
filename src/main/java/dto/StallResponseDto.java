@@ -8,14 +8,15 @@ package dto;
  *
  * @author Marco
  */
-public class StallDTO {
+public class StallResponseDto {
     
-    private String name;
     private long id;
+    private String name;
+    private String photoFilePath;
     
-    public StallDTO() {}
+    public StallResponseDto() {}
 
-    public StallDTO(String name, long id) {
+    public StallResponseDto(String name, long id) {
         this.name = name;
         this.id = id;
     }
@@ -28,12 +29,20 @@ public class StallDTO {
         this.id = id;
     }
 
+    public void setPhotoFilePath(String photoFilePath) {
+        this.photoFilePath = photoFilePath;
+    }
+
     public String getName() {
         return name;
     }
 
     public long getId() {
         return id;
+    }
+
+    public String getPhotoFilePath() {
+        return photoFilePath;
     }
     
 }

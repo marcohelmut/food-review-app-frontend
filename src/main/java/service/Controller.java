@@ -8,16 +8,56 @@ package service;
  *
  * @author Marco
  */
-import dto.FoodDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.CreateStallDto;
+import dto.StallResponseDto;
+import java.io.IOException;
 
 public class Controller {
-    
+
+    private final ObjectMapper mapper;
+    private final String BASE_URL = "http://localhost:8080/api";
+    private final HttpClient client;
+
+    public Controller() {
+        client = HttpClient.newHttpClient();
+        mapper = new ObjectMapper();
+    }
+
+    public StallResponseDto saveStall(CreateStallDto stall) throws JsonProcessingException, IOException, InterruptedException {
+        String stallJson = mapper.writeValueAsString(stall);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/stalls"))
+                .header("Content-Type", "application/json")
+                .header("Accept", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(stallJson))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+
+        return mapper.readValue(response.body(), StallResponseDto.class);
+    }
+
+    public StallResponseDto getStallByName(String stallName) throws IOException, InterruptedException {
+        String encodedStallName = URLEncoder.encode(stallName, StandardCharsets.UTF_8).replace("+", "%20");
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/stalls/" + encodedStallName))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(response.body(), StallResponseDto.class);
+    }
+
 }
