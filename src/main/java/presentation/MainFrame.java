@@ -19,6 +19,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         initComponents();
         setLocationRelativeTo(null);
+        homeButtonActionPerformed(null);
         
     }
 
@@ -33,6 +34,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         buttonPanel = new javax.swing.JPanel();
         adminLoginButton = new javax.swing.JButton();
+        homeButton = new javax.swing.JButton();
+        rankingsButton = new javax.swing.JButton();
+        stallsButton = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -44,19 +48,39 @@ public class MainFrame extends javax.swing.JFrame {
         adminLoginButton.setText("Admin");
         adminLoginButton.addActionListener(this::adminLoginButtonActionPerformed);
 
+        homeButton.setText("Home");
+        homeButton.addActionListener(this::homeButtonActionPerformed);
+
+        rankingsButton.setText("Rankings");
+        rankingsButton.addActionListener(this::rankingsButtonActionPerformed);
+
+        stallsButton.setText("Stalls");
+        stallsButton.addActionListener(this::stallsButtonActionPerformed);
+
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
         buttonPanelLayout.setHorizontalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(adminLoginButton)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(stallsButton)
+                    .addComponent(rankingsButton)
+                    .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(homeButton)
+                        .addComponent(adminLoginButton)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonPanelLayout.createSequentialGroup()
-                .addContainerGap(371, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
+                .addComponent(homeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rankingsButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(stallsButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
                 .addComponent(adminLoginButton)
                 .addGap(17, 17, 17))
         );
@@ -82,6 +106,42 @@ public class MainFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
+    private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
+        // TODO add your handling code here:
+        
+        HomePanel home = new HomePanel();
+        
+        mainPanel.removeAll();
+        mainPanel.add(home);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+        
+    }//GEN-LAST:event_homeButtonActionPerformed
+
+    private void rankingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rankingsButtonActionPerformed
+        // TODO add your handling code here:
+        
+        RankingsPanel rankings = new RankingsPanel();
+        
+        mainPanel.removeAll();
+        mainPanel.add(rankings);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+        
+    }//GEN-LAST:event_rankingsButtonActionPerformed
+
+    private void stallsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stallsButtonActionPerformed
+        // TODO add your handling code here:
+        
+        StallsPanel stalls = new StallsPanel();
+        
+        mainPanel.removeAll();
+        mainPanel.add(stalls);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+        
+    }//GEN-LAST:event_stallsButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -96,6 +156,9 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adminLoginButton;
     private javax.swing.JPanel buttonPanel;
+    private javax.swing.JButton homeButton;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JButton rankingsButton;
+    private javax.swing.JButton stallsButton;
     // End of variables declaration//GEN-END:variables
 }

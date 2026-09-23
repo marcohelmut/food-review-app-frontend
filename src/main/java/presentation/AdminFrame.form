@@ -40,7 +40,6 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="addFoodButton" max="32767" attributes="0"/>
-                      <Component id="addStallButton" max="32767" attributes="0"/>
                       <Component id="logOutButton" alignment="0" max="32767" attributes="0"/>
                       <Component id="adminDashboardButton" alignment="0" pref="116" max="32767" attributes="0"/>
                   </Group>
@@ -55,9 +54,7 @@
                   <Component id="adminDashboardButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="addFoodButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="addStallButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="270" max="32767" attributes="0"/>
+                  <EmptySpace pref="299" max="32767" attributes="0"/>
                   <Component id="logOutButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
@@ -73,15 +70,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addFoodButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="addStallButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Add Stall"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JButton" name="logOutButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Log Out"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logOutButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="adminDashboardButton">
           <Properties>

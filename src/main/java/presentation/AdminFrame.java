@@ -34,7 +34,6 @@ public class AdminFrame extends javax.swing.JFrame {
 
         buttonPanel = new javax.swing.JPanel();
         addFoodButton = new javax.swing.JButton();
-        addStallButton = new javax.swing.JButton();
         logOutButton = new javax.swing.JButton();
         adminDashboardButton = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
@@ -48,9 +47,8 @@ public class AdminFrame extends javax.swing.JFrame {
         addFoodButton.setText("Add Food");
         addFoodButton.addActionListener(this::addFoodButtonActionPerformed);
 
-        addStallButton.setText("Add Stall");
-
         logOutButton.setText("Log Out");
+        logOutButton.addActionListener(this::logOutButtonActionPerformed);
 
         adminDashboardButton.setText("Dashboard");
         adminDashboardButton.addActionListener(this::adminDashboardButtonActionPerformed);
@@ -63,7 +61,6 @@ public class AdminFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addFoodButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addStallButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(logOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(adminDashboardButton, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
                 .addContainerGap())
@@ -75,9 +72,7 @@ public class AdminFrame extends javax.swing.JFrame {
                 .addComponent(adminDashboardButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addFoodButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addStallButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
                 .addComponent(logOutButton)
                 .addGap(25, 25, 25))
         );
@@ -115,6 +110,18 @@ public class AdminFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_adminDashboardButtonActionPerformed
 
+    private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
+        // TODO add your handling code here:
+        
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.setVisible(true);
+        
+        java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(logOutButton);
+        if (parentWindow != null) {
+            parentWindow.dispose();
+        }
+    }//GEN-LAST:event_logOutButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -142,7 +149,6 @@ public class AdminFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFoodButton;
-    private javax.swing.JButton addStallButton;
     private javax.swing.JButton adminDashboardButton;
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JButton logOutButton;
