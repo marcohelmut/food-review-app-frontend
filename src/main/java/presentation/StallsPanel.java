@@ -26,7 +26,7 @@ import java.util.List;
  * @author Marco
  */
 public class StallsPanel extends javax.swing.JPanel {
-    
+
     private final Controller controller = new Controller();
     private final DefaultListModel<StallResponseDto> listModel = new DefaultListModel<>();
     private JList<StallResponseDto> stallsList;
@@ -100,11 +100,11 @@ public class StallsPanel extends javax.swing.JPanel {
         };
         worker.execute();
     }
-    
+
     private void setupFlatLafStyles() {
         jLabel1.putClientProperty(FlatClientProperties.STYLE, "font: bold +8;");
     }
-    
+
     private void setupListUI() {
         stallsList = new JList<>(listModel);
         stallsList.setCellRenderer(new StallListCellRenderer());
@@ -116,18 +116,39 @@ public class StallsPanel extends javax.swing.JPanel {
                 + "selectionArc: 12;"
                 + "cellMargins: 4,8,4,8;");
 
+        stallsList.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                if (e.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(e)) {
+                    int index = stallsList.locationToIndex(e.getPoint());
+                    if (index != -1) {
+                        StallResponseDto selectedStall = listModel.getElementAt(index);
+                        
+                        java.awt.Container parentContainer = StallsPanel.this.getParent();
+                        
+                        FoodsPanel foodspanel = new FoodsPanel();
+                        
+                        parentContainer.removeAll();
+                        parentContainer.add(foodspanel);
+                        parentContainer.revalidate();
+                        parentContainer.repaint();
+                    }
+                }
+            }
+        });
+
         scrollPane = new JScrollPane(stallsList);
         scrollPane.putClientProperty(FlatClientProperties.STYLE, "border: 0,0,0,0;");
 
         // Add scrollPane to panel layout
         setLayout(new BorderLayout(0, 16));
         setBorder(new EmptyBorder(24, 24, 24, 24));
-        
+
         removeAll(); // Clear default GroupLayout elements
         add(jLabel1, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
     }
-    
+
     private static class StallListCellRenderer extends JPanel implements ListCellRenderer<StallResponseDto> {
 
         private final JLabel photoLabel = new JLabel();
@@ -197,9 +218,8 @@ public class StallsPanel extends javax.swing.JPanel {
             return this;
         }
     }
-    
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
