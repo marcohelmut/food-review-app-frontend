@@ -4,6 +4,8 @@
  */
 package presentation;
 
+import com.formdev.flatlaf.FlatClientProperties;
+
 /**
  *
  * @author Marco
@@ -18,6 +20,7 @@ public class AdminFrame extends javax.swing.JFrame {
     public AdminFrame() {
         
         initComponents();
+        setupFlatLafStyles();
         setLocationRelativeTo(null);
         adminDashboardButtonActionPerformed(null);
         
@@ -86,6 +89,31 @@ public class AdminFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setupFlatLafStyles() {
+        // Sidebar panel background and clean right border
+        buttonPanel.putClientProperty(FlatClientProperties.STYLE, ""
+                + "background: $Menu.background;"
+                + "border: 0,0,0,1, $Component.borderColor;");
+
+        // Common styling for sidebar buttons (rounded corners, padded text, left alignment)
+        String navButtonStyle = ""
+                + "arc: 10;"
+                + "borderWidth: 0;"
+                + "focusWidth: 0;"
+                + "margin: 8,14,8,14;"
+                + "align: left;";
+
+        adminDashboardButton.putClientProperty(FlatClientProperties.STYLE, navButtonStyle);
+        addFoodButton.putClientProperty(FlatClientProperties.STYLE, navButtonStyle);
+
+        // Logout button styled with a modern outline look
+        logOutButton.putClientProperty(FlatClientProperties.STYLE, ""
+                + "arc: 10;"
+                + "buttonType: outline;"
+                + "margin: 8,14,8,14;"
+                + "align: left;");
+    }
+    
     private void addFoodButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFoodButtonActionPerformed
         // TODO add your handling code here:
         

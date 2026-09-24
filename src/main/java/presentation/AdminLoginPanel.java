@@ -4,6 +4,8 @@
  */
 package presentation;
 
+import com.formdev.flatlaf.FlatClientProperties;
+
 /**
  *
  * @author Marco
@@ -15,6 +17,7 @@ public class AdminLoginPanel extends javax.swing.JPanel {
      */
     public AdminLoginPanel() {
         initComponents();
+        setupFlatLafStyles();
     }
 
     /**
@@ -50,14 +53,14 @@ public class AdminLoginPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3)
                     .addComponent(adminLoginButton)
-                    .addComponent(adminPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addComponent(adminUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(616, Short.MAX_VALUE))
+                    .addComponent(adminUsernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                    .addComponent(adminPasswordField))
+                .addContainerGap(530, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,6 +81,28 @@ public class AdminLoginPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setupFlatLafStyles() {
+        // Modern header typography
+        jLabel3.putClientProperty(FlatClientProperties.STYLE, "font: bold +6;");
+
+        // Input field styling (rounded corners + modern placeholders)
+        String fieldStyle = ""
+                + "arc: 10;"
+                + "margin: 4,8,4,8;";
+
+        adminUsernameField.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
+        adminUsernameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter username");
+
+        adminPasswordField.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
+        adminPasswordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter password");
+
+        // Primary action button styling (accent color + rounded corners)
+        adminLoginButton.putClientProperty(FlatClientProperties.STYLE, ""
+                + "arc: 10;"
+                + "buttonType: default;"
+                + "margin: 6,16,6,16;");
+    }
+    
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
         // TODO add your handling code here:
         

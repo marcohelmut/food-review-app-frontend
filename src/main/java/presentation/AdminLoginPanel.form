@@ -23,15 +23,15 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <Component id="adminLoginButton" min="-2" max="-2" attributes="0"/>
-                  <Component id="adminPasswordField" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <Component id="adminUsernameField" min="-2" max="-2" attributes="0"/>
+                  <Component id="adminUsernameField" alignment="0" pref="158" max="32767" attributes="0"/>
+                  <Component id="adminPasswordField" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="616" max="32767" attributes="0"/>
+              <EmptySpace pref="530" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

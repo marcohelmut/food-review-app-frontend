@@ -4,6 +4,7 @@
  */
 package presentation;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import dto.CreateFoodDto;
 import dto.CreateStallDto;
 import dto.FoodResponseDto;
@@ -33,6 +34,7 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
 
     public AdminAddFoodPanel() {
         initComponents();
+        setupFlatLafStyles();
     }
 
     /**
@@ -75,25 +77,11 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
         addFoodButton.addActionListener(this::addFoodButtonActionPerformed);
 
         stallPhotoPanel.setBackground(new java.awt.Color(0, 102, 102));
+        stallPhotoPanel.setPreferredSize(new java.awt.Dimension(160, 160));
+        stallPhotoPanel.setLayout(new java.awt.BorderLayout());
+        stallPhotoPanel.add(photoPreviewLabel, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout stallPhotoPanelLayout = new javax.swing.GroupLayout(stallPhotoPanel);
-        stallPhotoPanel.setLayout(stallPhotoPanelLayout);
-        stallPhotoPanelLayout.setHorizontalGroup(
-            stallPhotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(stallPhotoPanelLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(photoPreviewLabel)
-                .addContainerGap(92, Short.MAX_VALUE))
-        );
-        stallPhotoPanelLayout.setVerticalGroup(
-            stallPhotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(stallPhotoPanelLayout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(photoPreviewLabel)
-                .addContainerGap(70, Short.MAX_VALUE))
-        );
-
-        uploadStallPhotoButton.setText("Upload Photo");
+        uploadStallPhotoButton.setText("Upload Stall Photo");
         uploadStallPhotoButton.addActionListener(this::uploadStallPhotoButtonActionPerformed);
 
         stallField.addActionListener(this::stallFieldActionPerformed);
@@ -115,27 +103,13 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
         clearFieldsButton.setText("Clear Fields");
         clearFieldsButton.addActionListener(this::clearFieldsButtonActionPerformed);
 
-        uploadFoodPhotoButton1.setText("Upload Photo");
+        uploadFoodPhotoButton1.setText("Upload Food Photo");
         uploadFoodPhotoButton1.addActionListener(this::uploadFoodPhotoButton1ActionPerformed);
 
         foodPhotoPanel.setBackground(new java.awt.Color(0, 102, 102));
-
-        javax.swing.GroupLayout foodPhotoPanelLayout = new javax.swing.GroupLayout(foodPhotoPanel);
-        foodPhotoPanel.setLayout(foodPhotoPanelLayout);
-        foodPhotoPanelLayout.setHorizontalGroup(
-            foodPhotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(foodPhotoPanelLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(foodPhotoPreviewLabel)
-                .addContainerGap(92, Short.MAX_VALUE))
-        );
-        foodPhotoPanelLayout.setVerticalGroup(
-            foodPhotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(foodPhotoPanelLayout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(foodPhotoPreviewLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        foodPhotoPanel.setPreferredSize(new java.awt.Dimension(160, 160));
+        foodPhotoPanel.setLayout(new java.awt.BorderLayout());
+        foodPhotoPanel.add(foodPhotoPreviewLabel, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -147,99 +121,162 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(stallField, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(stallField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(stallPhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(uploadStallPhotoButton)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
+                        .addGap(111, 111, 111)
                         .addComponent(saveStall)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(stallPhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(uploadStallPhotoButton)))
+                        .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(getStallButton)
-                                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(stallFieldForAddFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(stallIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE))
+                                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(foodNameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(foodNameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(24, 24, 24)))
+                                .addGap(24, 24, 24))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(stallFieldForAddFood, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(stallIdField)
+                                        .addGap(24, 24, 24)))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(uploadFoodPhotoButton1)
-                            .addComponent(foodPhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(foodPhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(uploadFoodPhotoButton1)))
                         .addGap(111, 111, 111))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addFoodButton)
-                        .addGap(260, 260, 260))))
+                        .addGap(327, 327, 327))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(stallPhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(uploadStallPhotoButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGap(60, 60, 60)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(stallFieldForAddFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(stallFieldForAddFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(stallIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(getStallButton))
+                                    .addComponent(foodPhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(uploadFoodPhotoButton1)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(stallField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(stallIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(foodNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(stallPhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(getStallButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(foodNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(foodPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(uploadFoodPhotoButton1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(uploadStallPhotoButton)))
                         .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(addFoodButton)
-                            .addComponent(saveStall)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stallField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                        .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(addFoodButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(saveStall)
+                        .addGap(105, 105, 105)))
                 .addComponent(clearFieldsButton)
                 .addGap(91, 91, 91))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void setupFlatLafStyles() {
+        // Shared text input style (rounded corners + inner margin)
+        String fieldStyle = ""
+                + "arc: 10;"
+                + "margin: 4,8,4,8;";
+
+        stallField.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
+        stallField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "e.g., Stall A");
+
+        stallFieldForAddFood.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
+        stallFieldForAddFood.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search stall...");
+
+        stallIdField.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
+        stallIdField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "ID");
+
+        foodNameField.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
+        foodNameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "e.g., Burger");
+
+        priceField.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
+        priceField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "0.00");
+
+        // Rounded image container panels
+        String photoPanelStyle = ""
+                + "arc: 16;"
+                + "background: $ImagePreview.background;";
+
+        stallPhotoPanel.putClientProperty(FlatClientProperties.STYLE, photoPanelStyle);
+        foodPhotoPanel.putClientProperty(FlatClientProperties.STYLE, photoPanelStyle);
+
+        // Primary action buttons (filled accent color)
+        String primaryButtonStyle = ""
+                + "arc: 10;"
+                + "buttonType: default;"
+                + "margin: 6,14,6,14;";
+
+        saveStall.putClientProperty(FlatClientProperties.STYLE, primaryButtonStyle);
+        addFoodButton.putClientProperty(FlatClientProperties.STYLE, primaryButtonStyle);
+
+        // Secondary / Action buttons
+        String secondaryButtonStyle = ""
+                + "arc: 10;"
+                + "margin: 6,12,6,12;";
+
+        uploadStallPhotoButton.putClientProperty(FlatClientProperties.STYLE, secondaryButtonStyle);
+        uploadFoodPhotoButton1.putClientProperty(FlatClientProperties.STYLE, secondaryButtonStyle);
+        getStallButton.putClientProperty(FlatClientProperties.STYLE, secondaryButtonStyle);
+
+        // Clear / Utility button (outline style)
+        clearFieldsButton.putClientProperty(FlatClientProperties.STYLE, ""
+                + "arc: 10;"
+                + "buttonType: outline;"
+                + "margin: 6,12,6,12;");
+    }
 
     private void priceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceFieldActionPerformed
         // TODO add your handling code here:
@@ -273,7 +310,7 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
             ImageIcon photo = new ImageIcon(selectedFile.getAbsolutePath());
 
             //scale down to preview JLabel
-            Image scaledImage = photo.getImage().getScaledInstance(289, 267, Image.SCALE_SMOOTH);
+            Image scaledImage = photo.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
 
             //display the image on the preview JLabel
             photoPreviewLabel.setIcon(new ImageIcon(scaledImage));
@@ -311,8 +348,15 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         String name = foodNameField.getText();
-        double price = Double.parseDouble(priceField.getText());
-        long stallId = Long.parseLong(stallIdField.getText());
+        double price = 0.0;
+        long stallId = 0;
+
+        try {
+            price = Double.parseDouble(priceField.getText());
+            stallId = Long.parseLong(stallIdField.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error Saving Food", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
 
         CreateFoodDto food = new CreateFoodDto(name, price, stallId, foodPhotoFilePath);
 
@@ -321,7 +365,7 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Successfully saved food data.");
             clearFieldsButton.doClick();
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error Saving Stall", javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error Saving Food", javax.swing.JOptionPane.ERROR_MESSAGE);
         } catch (InterruptedException ex) {
             JOptionPane.showMessageDialog(this, "The operation was interrupted.", "Operation Interrupted", javax.swing.JOptionPane.WARNING_MESSAGE);
         }
@@ -387,7 +431,7 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
             ImageIcon photo = new ImageIcon(selectedFile.getAbsolutePath());
 
             //scale down to preview JLabel
-            Image scaledImage = photo.getImage().getScaledInstance(289, 267, Image.SCALE_SMOOTH);
+            Image scaledImage = photo.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
 
             //display the image on the preview JLabel
             foodPhotoPreviewLabel.setIcon(new ImageIcon(scaledImage));

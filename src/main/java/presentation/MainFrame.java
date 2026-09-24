@@ -4,6 +4,8 @@
  */
 package presentation;
 
+import com.formdev.flatlaf.FlatClientProperties;
+
 /**
  *
  * @author Marco
@@ -18,6 +20,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         
         initComponents();
+        setupFlatLafStyles();
         setLocationRelativeTo(null);
         homeButtonActionPerformed(null);
         
@@ -94,6 +97,31 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setupFlatLafStyles() {
+        // Sidebar panel background and clean right border
+        buttonPanel.putClientProperty(FlatClientProperties.STYLE, ""
+                + "background: $Menu.background;"
+                + "border: 0,0,0,1, $Component.borderColor;");
+
+        // Common styling for navigation buttons (rounded corners, padded text, clean focus)
+        String navButtonStyle = ""
+                + "arc: 10;"
+                + "borderWidth: 0;"
+                + "focusWidth: 0;"
+                + "margin: 8,14,8,14;"
+                + "align: left;";
+
+        homeButton.putClientProperty(FlatClientProperties.STYLE, navButtonStyle);
+        rankingsButton.putClientProperty(FlatClientProperties.STYLE, navButtonStyle);
+        stallsButton.putClientProperty(FlatClientProperties.STYLE, navButtonStyle);
+
+        // Admin button styled with an outline look
+        adminLoginButton.putClientProperty(FlatClientProperties.STYLE, ""
+                + "arc: 10;"
+                + "buttonType: outline;"
+                + "margin: 8,14,8,14;");
+    }
+    
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
         // TODO add your handling code here:
         
