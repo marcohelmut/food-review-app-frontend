@@ -9,6 +9,7 @@ package service;
  * @author Marco
  */
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -20,6 +21,7 @@ import dto.CreateFoodDto;
 import dto.CreateStallDto;
 import dto.FoodResponseDto;
 import dto.StallResponseDto;
+import java.util.List;
 import java.io.IOException;
 
 public class Controller {
@@ -60,6 +62,22 @@ public class Controller {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return mapper.readValue(response.body(), StallResponseDto.class);
+    }
+    
+    public List<StallResponseDto> getStalls() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/stalls"))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+        throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+        
+        return mapper.readValue(response.body(), new TypeReference<List<StallResponseDto>>() {});
     }
     
     public FoodResponseDto saveFood(CreateFoodDto food) throws JsonProcessingException, IOException, InterruptedException {

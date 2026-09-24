@@ -4,17 +4,42 @@
  */
 package presentation;
 
+import com.formdev.flatlaf.FlatClientProperties;
+import dto.StallResponseDto;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+import service.Controller;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.util.List;
+
 /**
  *
  * @author Marco
  */
 public class StallsPanel extends javax.swing.JPanel {
+    
+    private final Controller controller = new Controller();
+    private final DefaultListModel<StallResponseDto> listModel = new DefaultListModel<>();
+    private JList<StallResponseDto> stallsList;
+    private JScrollPane scrollPane;
 
     /**
      * Creates new form StallsPanel
      */
     public StallsPanel() {
         initComponents();
+        setupFlatLafStyles();
+        setupListUI();
+        loadStallsData();
     }
 
     /**
@@ -48,7 +73,133 @@ public class StallsPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void loadStallsData() {
+        SwingWorker<List<StallResponseDto>, Void> worker = new SwingWorker<>() {
+            @Override
+            protected List<StallResponseDto> doInBackground() throws Exception {
+                return controller.getStalls();
+            }
 
+            @Override
+            protected void done() {
+                try {
+                    List<StallResponseDto> stalls = get();
+                    listModel.clear();
+                    for (StallResponseDto stall : stalls) {
+                        listModel.addElement(stall);
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            StallsPanel.this,
+                            "Failed to load stalls: " + ex.getMessage(),
+                            "Error Loading Stalls",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        };
+        worker.execute();
+    }
+    
+    private void setupFlatLafStyles() {
+        jLabel1.putClientProperty(FlatClientProperties.STYLE, "font: bold +8;");
+    }
+    
+    private void setupListUI() {
+        stallsList = new JList<>(listModel);
+        stallsList.setCellRenderer(new StallListCellRenderer());
+        stallsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        stallsList.setFixedCellHeight(80);
+
+        // FlatLaf specific JList properties
+        stallsList.putClientProperty(FlatClientProperties.STYLE, ""
+                + "selectionArc: 12;"
+                + "cellMargins: 4,8,4,8;");
+
+        scrollPane = new JScrollPane(stallsList);
+        scrollPane.putClientProperty(FlatClientProperties.STYLE, "border: 0,0,0,0;");
+
+        // Add scrollPane to panel layout
+        setLayout(new BorderLayout(0, 16));
+        setBorder(new EmptyBorder(24, 24, 24, 24));
+        
+        removeAll(); // Clear default GroupLayout elements
+        add(jLabel1, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
+    }
+    
+    private static class StallListCellRenderer extends JPanel implements ListCellRenderer<StallResponseDto> {
+
+        private final JLabel photoLabel = new JLabel();
+        private final JLabel nameLabel = new JLabel();
+        private final JLabel idLabel = new JLabel();
+
+        public StallListCellRenderer() {
+            setLayout(new BorderLayout(16, 0));
+            setBorder(new EmptyBorder(8, 12, 8, 12));
+
+            // Image Thumbnail Container
+            photoLabel.setPreferredSize(new Dimension(60, 60));
+            photoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            photoLabel.putClientProperty(FlatClientProperties.STYLE, "arc: 10;");
+
+            // Text Metadata Panel
+            JPanel textPanel = new JPanel(new GridLayout(2, 1, 0, 2));
+            textPanel.setOpaque(false);
+
+            nameLabel.putClientProperty(FlatClientProperties.STYLE, "font: bold +2;");
+            idLabel.putClientProperty(FlatClientProperties.STYLE, "[light]font: -1;");
+
+            textPanel.add(nameLabel);
+            textPanel.add(idLabel);
+
+            add(photoLabel, BorderLayout.WEST);
+            add(textPanel, BorderLayout.CENTER);
+        }
+
+        @Override
+        public Component getListCellRendererComponent(
+                JList<? extends StallResponseDto> list,
+                StallResponseDto stall,
+                int index,
+                boolean isSelected,
+                boolean cellHasFocus) {
+
+            nameLabel.setText(stall.getName());
+            idLabel.setText("Stall ID: " + stall.getId());
+
+            // Image Scaling and Fallback
+            if (stall.getPhotoFilePath() != null && !stall.getPhotoFilePath().equals("no_photo_attached")) {
+                File imgFile = new File(stall.getPhotoFilePath());
+                if (imgFile.exists()) {
+                    ImageIcon originalIcon = new ImageIcon(imgFile.getAbsolutePath());
+                    Image scaledImg = originalIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                    photoLabel.setIcon(new ImageIcon(scaledImg));
+                } else {
+                    photoLabel.setIcon(null);
+                }
+            } else {
+                photoLabel.setIcon(null);
+            }
+
+            // Theme-aware selection state colors
+            if (isSelected) {
+                setBackground(list.getSelectionBackground());
+                nameLabel.setForeground(list.getSelectionForeground());
+                idLabel.setForeground(list.getSelectionForeground());
+            } else {
+                setBackground(list.getBackground());
+                nameLabel.setForeground(list.getForeground());
+                idLabel.setForeground(UIManager.getColor("Label.disabledForeground"));
+            }
+
+            setOpaque(isSelected);
+            return this;
+        }
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
