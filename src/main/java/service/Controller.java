@@ -80,6 +80,22 @@ public class Controller {
         return mapper.readValue(response.body(), new TypeReference<List<StallResponseDto>>() {});
     }
     
+    public List<FoodResponseDto> getFoodsByStall(long id) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/foods/" + id))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+        throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+        
+        return mapper.readValue(response.body(), new TypeReference<List<FoodResponseDto>>() {});
+    }
+    
     public FoodResponseDto saveFood(CreateFoodDto food) throws JsonProcessingException, IOException, InterruptedException {
         String foodJson = mapper.writeValueAsString(food);
         HttpRequest request = HttpRequest.newBuilder()
@@ -97,5 +113,6 @@ public class Controller {
 
         return mapper.readValue(response.body(), FoodResponseDto.class);
     }
+    
 
 }

@@ -12,7 +12,7 @@ public class FoodResponseDto {
     
     long id;
     String name;
-    double price;
+    Double price;
     long stallId;
     String foodPhotoFilePath;
     
@@ -34,7 +34,7 @@ public class FoodResponseDto {
         return name;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
