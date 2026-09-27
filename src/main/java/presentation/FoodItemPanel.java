@@ -7,6 +7,7 @@ package presentation;
 import dto.CreateReviewDto;
 import dto.FoodResponseDto;
 import dto.ReviewResponseDto;
+import java.awt.Container;
 import java.awt.Image;
 import java.io.IOException;
 import javax.swing.ImageIcon;
@@ -76,6 +77,7 @@ public class FoodItemPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         studentNumberField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        deleteFoodButton = new javax.swing.JButton();
 
         foodNameLabel.setText("Food");
 
@@ -103,6 +105,9 @@ public class FoodItemPanel extends javax.swing.JPanel {
         jLabel7.setText("Student Number:");
 
         jLabel8.setText("Add a review:");
+
+        deleteFoodButton.setText("Delete Food");
+        deleteFoodButton.addActionListener(this::deleteFoodButtonActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -133,7 +138,10 @@ public class FoodItemPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel2)))
                             .addComponent(jLabel7)
                             .addComponent(studentNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(79, 79, 79)
+                                .addComponent(deleteFoodButton)))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(priceScoreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(35, 35, 35)
@@ -161,9 +169,15 @@ public class FoodItemPanel extends javax.swing.JPanel {
                     .addComponent(stallNameLabel))
                 .addGap(13, 13, 13)
                 .addComponent(foodPhotoLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(deleteFoodButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jLabel7)
                 .addGap(3, 3, 3)
                 .addComponent(studentNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,10 +223,42 @@ public class FoodItemPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_sendReviewButtonActionPerformed
 
+    private void deleteFoodButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFoodButtonActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(
+                    FoodItemPanel.this,
+                    "Are you sure you want to delete this food item?",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                try {
+                    // 2. Delete the stall
+                    controller.deleteFood(food.getId());
+                    JOptionPane.showMessageDialog(FoodItemPanel.this, "Food deleted successfully.");
+
+                    // 3. Go back to StallsPanel
+                    Container parentContainer = FoodItemPanel.this.getParent();
+                    if (parentContainer != null) {
+                        parentContainer.removeAll();
+                        parentContainer.add(new FoodsPanel(food.getStallId(), stallName));
+                        parentContainer.revalidate();
+                        parentContainer.repaint();
+                    }
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(FoodItemPanel.this, ex.getMessage(), "Error deleting Stall", JOptionPane.ERROR_MESSAGE);
+                } catch (InterruptedException ex) {
+                    JOptionPane.showMessageDialog(FoodItemPanel.this, "Operation interrupted.", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+    }//GEN-LAST:event_deleteFoodButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cleanlinessScoreField;
     private javax.swing.JTextField commentField;
+    private javax.swing.JButton deleteFoodButton;
     private javax.swing.JLabel foodNameLabel;
     private javax.swing.JLabel foodPhotoLabel;
     private javax.swing.JLabel foodPriceLabel;
