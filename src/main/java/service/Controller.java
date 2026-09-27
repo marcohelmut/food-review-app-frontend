@@ -134,5 +134,18 @@ public class Controller {
         return mapper.readValue(response.body(), ReviewResponseDto.class);
     }
     
+    public void deleteStall(long stallId) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/stalls/" + stallId))
+                .DELETE()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+    }
+    
 
 }

@@ -15,6 +15,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,7 +136,7 @@ public class FoodsPanel extends javax.swing.JPanel {
         foodsList.putClientProperty(FlatClientProperties.STYLE, ""
                 + "selectionArc: 12;"
                 + "cellMargins: 4,8,4,8;");
-        
+
         foodsList.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -143,11 +144,11 @@ public class FoodsPanel extends javax.swing.JPanel {
                     int index = foodsList.locationToIndex(e.getPoint());
                     if (index != -1) {
                         FoodResponseDto selectedFood = listModel.getElementAt(index);
-                        
+
                         java.awt.Container parentContainer = FoodsPanel.this.getParent();
-                        
+
                         FoodItemPanel foodItemPanel = new FoodItemPanel(selectedFood, stallName);
-                        
+
                         parentContainer.removeAll();
                         parentContainer.add(foodItemPanel);
                         parentContainer.revalidate();
@@ -160,12 +161,57 @@ public class FoodsPanel extends javax.swing.JPanel {
         scrollPane = new JScrollPane(foodsList);
         scrollPane.putClientProperty(FlatClientProperties.STYLE, "border: 0,0,0,0;");
 
-        // Add scrollPane to panel layout matching StallsPanel layout structure
+        // 1. Create a Top Header Panel using BorderLayout
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setOpaque(false); // Keeps background theme consistent
+
+        // 2. Create and configure your top-right button
+        JButton topRightBtn = new JButton("Delete Stall");
+        topRightBtn.putClientProperty(FlatClientProperties.STYLE, "arc: 8;"); // FlatLaf styling
+        topRightBtn.addActionListener(e -> {
+            // TODO: Add your button click action here
+            int confirm = JOptionPane.showConfirmDialog(
+                    FoodsPanel.this,
+                    "Are you sure you want to delete this stall?"
+                            + " This also deletes all foods associated with the stall",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                try {
+                    // 2. Delete the stall
+                    controller.deleteStall(stallId);
+                    JOptionPane.showMessageDialog(FoodsPanel.this, "Stall deleted successfully.");
+
+                    // 3. Go back to StallsPanel
+                    Container parentContainer = FoodsPanel.this.getParent();
+                    if (parentContainer != null) {
+                        parentContainer.removeAll();
+                        parentContainer.add(new StallsPanel());
+                        parentContainer.revalidate();
+                        parentContainer.repaint();
+                    }
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(FoodsPanel.this, ex.getMessage(), "Error deleting Stall", JOptionPane.ERROR_MESSAGE);
+                } catch (InterruptedException ex) {
+                    JOptionPane.showMessageDialog(FoodsPanel.this, "Operation interrupted.", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+        // 3. Assemble the header panel (Title Left, Button Right)
+        topPanel.add(jLabel1, BorderLayout.WEST);
+        topPanel.add(topRightBtn, BorderLayout.EAST);
+
+        jLabel1.setText(stallName);
+
+        // 4. Configure main panel layout
         setLayout(new BorderLayout(0, 16));
         setBorder(new EmptyBorder(24, 24, 24, 24));
 
         removeAll(); // Clear default GroupLayout elements
-        add(jLabel1, BorderLayout.NORTH);
+        add(topPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
     }
 
