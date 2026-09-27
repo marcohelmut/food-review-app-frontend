@@ -124,11 +124,12 @@ public class StallsPanel extends javax.swing.JPanel {
                     if (index != -1) {
                         StallResponseDto selectedStall = listModel.getElementAt(index);
                         
+                        String stallName = selectedStall.getName();
                         long stallId = selectedStall.getId();
                         
                         java.awt.Container parentContainer = StallsPanel.this.getParent();
                         
-                        FoodsPanel foodspanel = new FoodsPanel(stallId);
+                        FoodsPanel foodspanel = new FoodsPanel(stallId, stallName);
                         
                         parentContainer.removeAll();
                         parentContainer.add(foodspanel);

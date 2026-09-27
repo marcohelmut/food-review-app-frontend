@@ -18,8 +18,10 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.CreateFoodDto;
+import dto.CreateReviewDto;
 import dto.CreateStallDto;
 import dto.FoodResponseDto;
+import dto.ReviewResponseDto;
 import dto.StallResponseDto;
 import java.util.List;
 import java.io.IOException;
@@ -82,7 +84,7 @@ public class Controller {
     
     public List<FoodResponseDto> getFoodsByStall(long id) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/foods/" + id))
+                .uri(URI.create(BASE_URL + "/foods/stall/" + id))
                 .header("Accept", "application/json")
                 .GET()
                 .build();
@@ -112,6 +114,24 @@ public class Controller {
         }
 
         return mapper.readValue(response.body(), FoodResponseDto.class);
+    }
+    
+    public ReviewResponseDto saveReview(CreateReviewDto review) throws JsonProcessingException, IOException, InterruptedException {
+        String reviewJson = mapper.writeValueAsString(review);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/reviews"))
+                .header("Content-Type", "application/json")
+                .header("Accept", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(reviewJson))
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+        
+        return mapper.readValue(response.body(), ReviewResponseDto.class);
     }
     
 

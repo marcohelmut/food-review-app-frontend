@@ -41,6 +41,7 @@ import service.Controller;
  */
 public class FoodsPanel extends javax.swing.JPanel {
 
+    private final String stallName;
     private final long stallId;
     private final Controller controller = new Controller();
     private final DefaultListModel<FoodResponseDto> listModel = new DefaultListModel<>();
@@ -50,8 +51,9 @@ public class FoodsPanel extends javax.swing.JPanel {
     /**
      * Creates new form FoodsPanel
      */
-    public FoodsPanel(long stallId) {
+    public FoodsPanel(long stallId, String stallName) {
         this.stallId = stallId;
+        this.stallName = stallName;
         initComponents();
         setupListUI();
         setupFlatLafStyles();
@@ -133,6 +135,27 @@ public class FoodsPanel extends javax.swing.JPanel {
         foodsList.putClientProperty(FlatClientProperties.STYLE, ""
                 + "selectionArc: 12;"
                 + "cellMargins: 4,8,4,8;");
+        
+        foodsList.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                if (e.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(e)) {
+                    int index = foodsList.locationToIndex(e.getPoint());
+                    if (index != -1) {
+                        FoodResponseDto selectedFood = listModel.getElementAt(index);
+                        
+                        java.awt.Container parentContainer = FoodsPanel.this.getParent();
+                        
+                        FoodItemPanel foodItemPanel = new FoodItemPanel(selectedFood, stallName);
+                        
+                        parentContainer.removeAll();
+                        parentContainer.add(foodItemPanel);
+                        parentContainer.revalidate();
+                        parentContainer.repaint();
+                    }
+                }
+            }
+        });
 
         scrollPane = new JScrollPane(foodsList);
         scrollPane.putClientProperty(FlatClientProperties.STYLE, "border: 0,0,0,0;");
