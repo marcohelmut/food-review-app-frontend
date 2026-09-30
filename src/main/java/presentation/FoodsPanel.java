@@ -6,12 +6,10 @@ package presentation;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import dto.FoodResponseDto;
-import dto.StallResponseDto;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.File;
@@ -256,7 +254,7 @@ public class FoodsPanel extends javax.swing.JPanel {
             nameLabel.setText(food.getName());
 
             if (food.getPrice() != null) {
-                priceLabel.setText(String.format("Price: $%.2f", food.getPrice()));
+                priceLabel.setText(String.format("Price: ₱%.2f", food.getPrice()));
             } else {
                 priceLabel.setText("Price: N/A");
             }

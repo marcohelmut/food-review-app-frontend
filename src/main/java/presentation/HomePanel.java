@@ -4,17 +4,32 @@
  */
 package presentation;
 
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import service.Controller;
+
 /**
  *
  * @author Marco
  */
 public class HomePanel extends javax.swing.JPanel {
+    
+    Controller controller = new Controller();
 
     /**
      * Creates new form HomePanel
      */
     public HomePanel() {
         initComponents();
+        
+        try {
+            totalFoodsLabel.setText(String.valueOf(controller.getTotalFoodCount()));
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Failed to load total food count: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (InterruptedException ex) {
+            JOptionPane.showMessageDialog(this, "Food count loading interrupted.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        
     }
 
     /**
@@ -32,6 +47,7 @@ public class HomePanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        totalFoodsLabel = new javax.swing.JLabel();
 
         jLabel1.setText("Home");
 
@@ -45,6 +61,8 @@ public class HomePanel extends javax.swing.JPanel {
 
         jLabel6.setText("food 3 (highest cleanliness score)");
 
+        totalFoodsLabel.setText("total foods");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -55,7 +73,10 @@ public class HomePanel extends javax.swing.JPanel {
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(32, 32, 32)
+                                .addComponent(totalFoodsLabel))
                             .addComponent(jLabel1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(91, 91, 91)
@@ -72,7 +93,9 @@ public class HomePanel extends javax.swing.JPanel {
                 .addGap(31, 31, 31)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(totalFoodsLabel))
                 .addGap(32, 32, 32)
                 .addComponent(jLabel3)
                 .addGap(33, 33, 33)
@@ -92,5 +115,6 @@ public class HomePanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel totalFoodsLabel;
     // End of variables declaration//GEN-END:variables
 }

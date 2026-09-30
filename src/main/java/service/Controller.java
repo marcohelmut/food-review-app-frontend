@@ -178,5 +178,72 @@ public class Controller {
             throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
         }
     }
+    
+    public long getTotalFoodCount() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/foods/count"))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+        
+        return mapper.readValue(response.body(), long.class);
+    }
+    
+    public List<FoodResponseDto> getPriceRanking() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/foods/priceRank"))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+        
+        return mapper.readValue(response.body(), new TypeReference<List<FoodResponseDto>>() {
+        });
+    }
+    
+    public List<FoodResponseDto> getTasteRanking() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/foods/tasteRank"))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+        
+        return mapper.readValue(response.body(), new TypeReference<List<FoodResponseDto>>() {
+        });
+    }
+    
+    public List<FoodResponseDto> getCleanlinessRanking() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/foods/cleanlinessRank"))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+        
+        return mapper.readValue(response.body(), new TypeReference<List<FoodResponseDto>>() {
+        });
+    }
 
 }
