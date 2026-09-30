@@ -11,6 +11,7 @@ package dto;
 public class CreateReviewDto {
     
     int studentNumber;
+    String studentNickname;
     int priceScore;
     int tasteScore;
     int cleanlinessScore;
@@ -19,8 +20,9 @@ public class CreateReviewDto {
     
     public CreateReviewDto() {}
 
-    public CreateReviewDto(int studentNumber, int priceScore, int tasteScore, int cleanlinessScore, String comment, long foodId) {
+    public CreateReviewDto(int studentNumber, String studentNickname, int priceScore, int tasteScore, int cleanlinessScore, String comment, long foodId) {
         this.studentNumber = studentNumber;
+        this.studentNickname = studentNickname;
         this.priceScore = priceScore;
         this.tasteScore = tasteScore;
         this.cleanlinessScore = cleanlinessScore;
@@ -30,6 +32,10 @@ public class CreateReviewDto {
 
     public int getStudentNumber() {
         return studentNumber;
+    }
+
+    public String getStudentNickname() {
+        return studentNickname;
     }
 
     public int getPriceScore() {
@@ -55,7 +61,11 @@ public class CreateReviewDto {
     public void setStudentNumber(int studentNumber) {
         this.studentNumber = studentNumber;
     }
-    
+
+    public void setStudentNickname(String studentNickname) {
+        this.studentNickname = studentNickname;
+    }
+
     public void setPriceScore(int priceScore) {
         this.priceScore = priceScore;
     }

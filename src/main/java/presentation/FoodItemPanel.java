@@ -78,6 +78,8 @@ public class FoodItemPanel extends javax.swing.JPanel {
         studentNumberField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         deleteFoodButton = new javax.swing.JButton();
+        studentNicknameField = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         foodNameLabel.setText("Food");
 
@@ -109,6 +111,8 @@ public class FoodItemPanel extends javax.swing.JPanel {
         deleteFoodButton.setText("Delete Food");
         deleteFoodButton.addActionListener(this::deleteFoodButtonActionPerformed);
 
+        jLabel9.setText("Nickname:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,12 +140,18 @@ public class FoodItemPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(stallNameLabel)
                                     .addComponent(jLabel2)))
-                            .addComponent(jLabel7)
-                            .addComponent(studentNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(79, 79, 79)
-                                .addComponent(deleteFoodButton)))
+                                .addComponent(deleteFoodButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(studentNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(studentNicknameField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(priceScoreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(35, 35, 35)
@@ -178,9 +188,13 @@ public class FoodItemPanel extends javax.swing.JPanel {
                         .addGap(32, 32, 32)
                         .addComponent(deleteFoodButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jLabel7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel9))
                 .addGap(3, 3, 3)
-                .addComponent(studentNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(studentNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(studentNicknameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -210,8 +224,9 @@ public class FoodItemPanel extends javax.swing.JPanel {
         int tasteScore = Integer.parseInt(tasteScoreField.getText());
         int cleanlinessScore = Integer.parseInt(cleanlinessScoreField.getText());
         String comment = commentField.getText();
+        String nickname = studentNicknameField.getText();
         
-        CreateReviewDto dto = new CreateReviewDto(studentNumber, priceScore, tasteScore, cleanlinessScore, comment, food.getId());
+        CreateReviewDto dto = new CreateReviewDto(studentNumber, nickname, priceScore, tasteScore, cleanlinessScore, comment, food.getId());
         
         try {
             ReviewResponseDto returnedReview = controller.saveReview(dto);
@@ -270,9 +285,11 @@ public class FoodItemPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField priceScoreField;
     private javax.swing.JButton sendReviewButton;
     private javax.swing.JLabel stallNameLabel;
+    private javax.swing.JTextField studentNicknameField;
     private javax.swing.JTextField studentNumberField;
     private javax.swing.JTextField tasteScoreField;
     // End of variables declaration//GEN-END:variables
