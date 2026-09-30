@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import service.Controller;
 import service.Service;
+import com.formdev.flatlaf.FlatClientProperties;
 
 /**
  *
@@ -33,6 +34,7 @@ public class FoodItemPanel extends javax.swing.JPanel {
         this.food = food;
         this.stallName = stallName;
         initComponents();
+        setupFlatLafStyles();
 
         String foodName = food.getName();
         foodNameLabel.setText(foodName);
@@ -158,19 +160,19 @@ public class FoodItemPanel extends javax.swing.JPanel {
                                         .addComponent(deleteFoodButton))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(studentNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel7))
-                                        .addGap(24, 24, 24)
+                                            .addComponent(jLabel7)
+                                            .addComponent(studentNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel9)
                                             .addComponent(studentNicknameField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(priceScoreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(35, 35, 35)
-                                    .addComponent(tasteScoreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(priceScoreField, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(tasteScoreField, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(28, 28, 28)
-                                    .addComponent(cleanlinessScoreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(59, 59, 59)))
+                                    .addComponent(cleanlinessScoreField, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(48, 48, 48)))
                             .addComponent(jLabel6)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(commentField, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,6 +241,52 @@ public class FoodItemPanel extends javax.swing.JPanel {
                         .addContainerGap())))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void setupFlatLafStyles() {
+        String inputFieldStyle = ""
+                + "arc: 10;"
+                + "margin: 4,8,4,8;";
+
+        studentNumberField.putClientProperty(FlatClientProperties.STYLE, inputFieldStyle);
+        studentNicknameField.putClientProperty(FlatClientProperties.STYLE, inputFieldStyle);
+        priceScoreField.putClientProperty(FlatClientProperties.STYLE, inputFieldStyle);
+        tasteScoreField.putClientProperty(FlatClientProperties.STYLE, inputFieldStyle);
+        cleanlinessScoreField.putClientProperty(FlatClientProperties.STYLE, inputFieldStyle);
+        commentField.putClientProperty(FlatClientProperties.STYLE, inputFieldStyle);
+
+        // Placeholders
+        studentNumberField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "6-digit ID");
+        studentNicknameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nickname");
+        priceScoreField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "1-5");
+        tasteScoreField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "1-5");
+        cleanlinessScoreField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "1-5");
+        commentField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Write a comment...");
+
+        // Clear buttons for text fields
+        studentNumberField.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON, true);
+        studentNicknameField.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON, true);
+
+        // Buttons
+        sendReviewButton.putClientProperty(FlatClientProperties.STYLE, ""
+                + "arc: 10;"
+                + "buttonType: accent;"
+                + "margin: 6,14,6,14;");
+
+        deleteFoodButton.putClientProperty(FlatClientProperties.STYLE, ""
+                + "arc: 10;"
+                + "buttonType: outline;"
+                + "borderColor: #E53935;"
+                + "foreground: #E53935;"
+                + "margin: 6,14,6,14;");
+
+        // Typography
+        foodNameLabel.putClientProperty(FlatClientProperties.STYLE, "font: bold +6");
+        foodPriceLabel.putClientProperty(FlatClientProperties.STYLE, "font: bold +2");
+        stallNameLabel.putClientProperty(FlatClientProperties.STYLE, "font: bold +2");
+
+        // ScrollPane border rounding
+        jScrollPane1.putClientProperty(FlatClientProperties.STYLE, "arc: 10");
+    }
 
     private void loadReviews() {
         try {
