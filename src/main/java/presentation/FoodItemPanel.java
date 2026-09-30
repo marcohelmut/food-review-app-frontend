@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import service.Controller;
+import service.Service;
 
 /**
  *
@@ -23,6 +24,7 @@ public class FoodItemPanel extends javax.swing.JPanel {
     private Controller controller = new Controller();
     private final FoodResponseDto food;
     private final String stallName;
+    private final Service service = new Service();
 
     /**
      * Creates new form FoodItemPanel
@@ -260,16 +262,31 @@ public class FoodItemPanel extends javax.swing.JPanel {
     private void sendReviewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendReviewButtonActionPerformed
         // TODO add your handling code here:
 
-        int studentNumber = Integer.parseInt(studentNumberField.getText());
-        int priceScore = Integer.parseInt(priceScoreField.getText());
-        int tasteScore = Integer.parseInt(tasteScoreField.getText());
-        int cleanlinessScore = Integer.parseInt(cleanlinessScoreField.getText());
-        String comment = commentField.getText();
-        String nickname = studentNicknameField.getText();
+        int studentNumber = 0;
+        int priceScore = 0;
+        int tasteScore = 0;
+        int cleanlinessScore = 0;
+
+        try {
+            studentNumber = service.validateIntegerData(studentNumberField, "Student Number");
+            priceScore = service.validateIntegerData(priceScoreField, "Price Score");
+            tasteScore = service.validateIntegerData(tasteScoreField, "Taste Score");
+            cleanlinessScore = service.validateIntegerData(cleanlinessScoreField, "Cleanliness Score");
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            return;
+        }
+
+        String comment = commentField.getText().trim();
+        String nickname = studentNicknameField.getText().trim();
+
+        if (comment.isEmpty() || nickname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please include a student number and nickname.");
+            return;
+        }
 
         CreateReviewDto dto = new CreateReviewDto(studentNumber, nickname, priceScore, tasteScore, cleanlinessScore, comment, food.getId());
 
-        // Clear input fields
         studentNumberField.setText("");
         priceScoreField.setText("");
         tasteScoreField.setText("");
@@ -277,9 +294,6 @@ public class FoodItemPanel extends javax.swing.JPanel {
         commentField.setText("");
         studentNicknameField.setText("");
 
-        // Refresh JList with updated reviews
-        loadReviews();
-        
         try {
             ReviewResponseDto returnedReview = controller.saveReview(dto);
             JOptionPane.showMessageDialog(this, "Successfully saved Review.");
@@ -288,6 +302,8 @@ public class FoodItemPanel extends javax.swing.JPanel {
         } catch (InterruptedException ex) {
             JOptionPane.showMessageDialog(this, "The operation was interrupted.", "Operation Interrupted", javax.swing.JOptionPane.WARNING_MESSAGE);
         }
+
+        loadReviews();
     }//GEN-LAST:event_sendReviewButtonActionPerformed
 
     private void deleteFoodButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFoodButtonActionPerformed
