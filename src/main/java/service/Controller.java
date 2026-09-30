@@ -58,7 +58,17 @@ public class Controller {
     public StallResponseDto getStallByName(String stallName) throws IOException, InterruptedException {
         String encodedStallName = URLEncoder.encode(stallName, StandardCharsets.UTF_8).replace("+", "%20");
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/stalls/" + encodedStallName))
+                .uri(URI.create(BASE_URL + "/stalls/name/" + encodedStallName))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(response.body(), StallResponseDto.class);
+    }
+    
+    public StallResponseDto getStallById(long id) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/stalls/" + id))
                 .GET()
                 .build();
 
@@ -182,6 +192,38 @@ public class Controller {
     public long getTotalFoodCount() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/foods/count"))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+        
+        return mapper.readValue(response.body(), long.class);
+    }
+    
+    public long getTotalStallCount() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/stalls/count"))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+        
+        return mapper.readValue(response.body(), long.class);
+    }
+    
+    public long getTotalReviewCount() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/reviews/count"))
                 .header("Accept", "application/json")
                 .GET()
                 .build();
