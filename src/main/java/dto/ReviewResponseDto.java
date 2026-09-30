@@ -4,14 +4,12 @@
  */
 package dto;
 
-import java.time.Instant;
-
 /**
  *
  * @author Marco
  */
 public class ReviewResponseDto {
-    
+
     long id;
     int studentNumber;
     String studentNickname;
@@ -21,8 +19,9 @@ public class ReviewResponseDto {
     String comment;
     long foodId;
     String createdAt;
-    
-    public ReviewResponseDto() {}
+
+    public ReviewResponseDto() {
+    }
 
     public ReviewResponseDto(long id, int studentNumber, String studentNickname, int priceScore, int tasteScore, int cleanlinessScore, String comment, long foodId, String createdAt) {
         this.id = id;
@@ -71,7 +70,7 @@ public class ReviewResponseDto {
     public String getCreatedAt() {
         return createdAt;
     }
-    
+
     public void setId(long id) {
         this.id = id;
     }
@@ -107,5 +106,15 @@ public class ReviewResponseDto {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
-    
+
+    @Override
+    public String toString() {
+        return String.format("%s says: (Price: %d/5) (Taste: %d/5) (Cleanliness: %d/5)  - \"%s\" ",
+                studentNickname != null && !studentNickname.isBlank() ? studentNickname : "Anonymous",
+                priceScore,
+                tasteScore,
+                cleanlinessScore,
+                comment != null ? comment : "");
+    }
+
 }

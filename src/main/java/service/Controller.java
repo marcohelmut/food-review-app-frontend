@@ -65,26 +65,44 @@ public class Controller {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return mapper.readValue(response.body(), StallResponseDto.class);
     }
-    
+
     public List<StallResponseDto> getStalls() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/stalls"))
                 .header("Accept", "application/json")
                 .GET()
                 .build();
-        
+
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
+
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
-        throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
         }
-        
-        return mapper.readValue(response.body(), new TypeReference<List<StallResponseDto>>() {});
+
+        return mapper.readValue(response.body(), new TypeReference<List<StallResponseDto>>() {
+        });
     }
-    
+
     public List<FoodResponseDto> getFoodsByStall(long id) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/foods/stall/" + id))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+
+        return mapper.readValue(response.body(), new TypeReference<List<FoodResponseDto>>() {
+        });
+    }
+
+    public List<ReviewResponseDto> getReviewsByFood(long foodId) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/reviews/foods/" + foodId))
                 .header("Accept", "application/json")
                 .GET()
                 .build();
@@ -92,12 +110,13 @@ public class Controller {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
-        throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
         }
         
-        return mapper.readValue(response.body(), new TypeReference<List<FoodResponseDto>>() {});
+        return mapper.readValue(response.body(), new TypeReference<List<ReviewResponseDto>>() {
+        });
     }
-    
+
     public FoodResponseDto saveFood(CreateFoodDto food) throws JsonProcessingException, IOException, InterruptedException {
         String foodJson = mapper.writeValueAsString(food);
         HttpRequest request = HttpRequest.newBuilder()
@@ -106,7 +125,7 @@ public class Controller {
                 .header("Accept", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(foodJson))
                 .build();
-        
+
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
@@ -115,7 +134,7 @@ public class Controller {
 
         return mapper.readValue(response.body(), FoodResponseDto.class);
     }
-    
+
     public ReviewResponseDto saveReview(CreateReviewDto review) throws JsonProcessingException, IOException, InterruptedException {
         String reviewJson = mapper.writeValueAsString(review);
         HttpRequest request = HttpRequest.newBuilder()
@@ -124,41 +143,40 @@ public class Controller {
                 .header("Accept", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(reviewJson))
                 .build();
-        
+
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
+
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
             throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
         }
-        
+
         return mapper.readValue(response.body(), ReviewResponseDto.class);
     }
-    
+
     public void deleteStall(long stallId) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/stalls/" + stallId))
                 .DELETE()
                 .build();
-        
+
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
+
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
             throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
         }
     }
-    
+
     public void deleteFood(long foodId) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/foods/" + foodId))
                 .DELETE()
                 .build();
-        
+
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
+
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
             throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
         }
     }
-    
 
 }
