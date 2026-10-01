@@ -12,7 +12,6 @@ import com.formdev.flatlaf.FlatClientProperties;
  */
 public class MainFrame extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
 
     /**
      * Creates new form MainPanel
@@ -20,7 +19,6 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         
         initComponents();
-        setupFlatLafStyles();
         setLocationRelativeTo(null);
         homeButtonActionPerformed(null);
         
@@ -40,6 +38,8 @@ public class MainFrame extends javax.swing.JFrame {
         homeButton = new javax.swing.JButton();
         rankingsButton = new javax.swing.JButton();
         stallsButton = new javax.swing.JButton();
+        addFoodButton = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,7 +49,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         buttonPanel.setBackground(new java.awt.Color(102, 204, 255));
 
-        adminLoginButton.setText("Admin");
+        adminLoginButton.setText("Login");
         adminLoginButton.addActionListener(this::adminLoginButtonActionPerformed);
 
         homeButton.setText("Home");
@@ -61,18 +61,28 @@ public class MainFrame extends javax.swing.JFrame {
         stallsButton.setText("Stalls");
         stallsButton.addActionListener(this::stallsButtonActionPerformed);
 
+        addFoodButton.setText("Add Food");
+        addFoodButton.addActionListener(this::addFoodButtonActionPerformed);
+
+        logoutButton.setText("Logout");
+
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
         buttonPanelLayout.setHorizontalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(stallsButton)
-                    .addComponent(rankingsButton)
-                    .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(homeButton)
-                        .addComponent(adminLoginButton)))
+                .addGap(16, 16, 16)
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(stallsButton)
+                        .addComponent(rankingsButton)
+                        .addComponent(homeButton))
+                    .addGroup(buttonPanelLayout.createSequentialGroup()
+                        .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(adminLoginButton)
+                            .addComponent(addFoodButton)
+                            .addComponent(logoutButton))
+                        .addGap(5, 5, 5)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         buttonPanelLayout.setVerticalGroup(
@@ -84,9 +94,13 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(rankingsButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(stallsButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                .addComponent(addFoodButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(adminLoginButton)
-                .addGap(17, 17, 17))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logoutButton)
+                .addGap(19, 19, 19))
         );
 
         getContentPane().add(buttonPanel);
@@ -171,6 +185,18 @@ public class MainFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_stallsButtonActionPerformed
 
+    private void addFoodButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFoodButtonActionPerformed
+        // TODO add your handling code here:
+        
+        AdminAddFoodPanel addFoodPanel = new AdminAddFoodPanel();
+        
+        mainPanel.removeAll();
+        mainPanel.add(addFoodPanel);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+        
+    }//GEN-LAST:event_addFoodButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -183,9 +209,11 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addFoodButton;
     private javax.swing.JButton adminLoginButton;
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JButton homeButton;
+    private javax.swing.JButton logoutButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton rankingsButton;
     private javax.swing.JButton stallsButton;

@@ -55,8 +55,8 @@ public class RankingsPanel extends javax.swing.JPanel {
      */
     public RankingsPanel() {
         initComponents();
+                setupFlatLafStyles();
         setupListUI();
-        setupFlatLafStyles();
         loadRankingData(RankingType.PRICE); // Default display
     }
 
