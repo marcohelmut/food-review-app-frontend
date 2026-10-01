@@ -239,7 +239,7 @@ public class Controller {
     
     public List<FoodResponseDto> getPriceRanking() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/foods/priceRank"))
+                .uri(URI.create(BASE_URL + "/foods/rankings/price"))
                 .header("Accept", "application/json")
                 .GET()
                 .build();
@@ -256,7 +256,7 @@ public class Controller {
     
     public List<FoodResponseDto> getTasteRanking() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/foods/tasteRank"))
+                .uri(URI.create(BASE_URL + "/foods/rankings/taste"))
                 .header("Accept", "application/json")
                 .GET()
                 .build();
@@ -273,7 +273,7 @@ public class Controller {
     
     public List<FoodResponseDto> getCleanlinessRanking() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/foods/cleanlinessRank"))
+                .uri(URI.create(BASE_URL + "/foods/rankings/cleanliness"))
                 .header("Accept", "application/json")
                 .GET()
                 .build();
