@@ -25,16 +25,51 @@ import dto.ReviewResponseDto;
 import dto.StallResponseDto;
 import java.util.List;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 
 public class Controller {
 
     private final ObjectMapper mapper;
-    private final String BASE_URL = "http://localhost:8080/api";
+    private final String BASE_URL = "https://localhost:8443/api";
     private final HttpClient client;
 
     public Controller() {
-        client = HttpClient.newHttpClient();
-        mapper = new ObjectMapper();
+        this.client = createHttpsClient();
+        this.mapper = new ObjectMapper();
+    }
+    
+    private HttpClient createHttpsClient() {
+        try {
+            KeyStore store = KeyStore.getInstance("PKCS12");
+            
+            try (InputStream is = getClass().getResourceAsStream("/keystore.p12")) {
+                if (is == null) {
+                    throw new IllegalStateException("Keystore not found");
+                }
+                
+                String password = System.getenv("SSL_KEYSTORE_PASSWORD");
+                store.load(is, password.toCharArray());
+                
+                TrustManagerFactory tmf = TrustManagerFactory.getInstance(
+                        TrustManagerFactory.getDefaultAlgorithm()
+                );
+                tmf.init(store);
+                
+                SSLContext sslContext = SSLContext.getInstance("TLS");
+                sslContext.init(null, tmf.getTrustManagers(), null);
+                
+                //System.setProperty("jdk.internal.httpclient.disableHostnameVerification", "true");
+                
+                return HttpClient.newBuilder()
+                        .sslContext(sslContext)
+                        .build();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to initialize HTTPS client");
+        }
     }
 
     public StallResponseDto saveStall(CreateStallDto stall) throws JsonProcessingException, IOException, InterruptedException {
@@ -63,6 +98,11 @@ public class Controller {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+        
         return mapper.readValue(response.body(), StallResponseDto.class);
     }
     

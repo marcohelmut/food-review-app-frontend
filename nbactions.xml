@@ -10,11 +10,12 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.6.3:exec</goal>
             </goals>
             <properties>
-                <exec.vmArgs></exec.vmArgs>
+                <exec.vmArgs>-Dssl.keystore.password=password123</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
                 <exec.mainClass>presentation.MainFrame</exec.mainClass>
                 <exec.executable>java</exec.executable>
+                <Env.SSL_KEYSTORE_PASSWORD>password123</Env.SSL_KEYSTORE_PASSWORD>
             </properties>
         </action>
         <action>
@@ -27,7 +28,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.6.3:exec</goal>
             </goals>
             <properties>
-                <exec.vmArgs>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
+                <exec.vmArgs>-Dssl.keystore.password=password123 -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
                 <exec.mainClass>presentation.MainFrame</exec.mainClass>
@@ -45,7 +46,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.6.3:exec</goal>
             </goals>
             <properties>
-                <exec.vmArgs></exec.vmArgs>
+                <exec.vmArgs>-Dssl.keystore.password=password123</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.mainClass>presentation.MainFrame</exec.mainClass>
                 <exec.executable>java</exec.executable>

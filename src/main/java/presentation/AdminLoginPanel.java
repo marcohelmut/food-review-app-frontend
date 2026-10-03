@@ -29,12 +29,12 @@ public class AdminLoginPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        adminUsernameField = new javax.swing.JTextField();
+        usernameField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        adminPasswordField = new javax.swing.JTextField();
-        adminLoginButton = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(204, 204, 255));
 
@@ -42,8 +42,8 @@ public class AdminLoginPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Password");
 
-        adminLoginButton.setText("login");
-        adminLoginButton.addActionListener(this::adminLoginButtonActionPerformed);
+        loginButton.setText("login");
+        loginButton.addActionListener(this::loginButtonActionPerformed);
 
         jLabel3.setText("Admin Login");
 
@@ -55,11 +55,11 @@ public class AdminLoginPanel extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3)
-                    .addComponent(adminLoginButton)
+                    .addComponent(loginButton)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addComponent(adminUsernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                    .addComponent(adminPasswordField))
+                    .addComponent(usernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                    .addComponent(passwordField))
                 .addContainerGap(530, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -70,13 +70,13 @@ public class AdminLoginPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adminUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adminPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(adminLoginButton)
+                .addComponent(loginButton)
                 .addContainerGap(185, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -90,39 +90,39 @@ public class AdminLoginPanel extends javax.swing.JPanel {
                 + "arc: 10;"
                 + "margin: 4,8,4,8;";
 
-        adminUsernameField.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
-        adminUsernameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter username");
+        usernameField.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
+        usernameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter username");
 
-        adminPasswordField.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
-        adminPasswordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter password");
+        passwordField.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
+        passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter password");
 
         // Primary action button styling (accent color + rounded corners)
-        adminLoginButton.putClientProperty(FlatClientProperties.STYLE, ""
+        loginButton.putClientProperty(FlatClientProperties.STYLE, ""
                 + "arc: 10;"
                 + "buttonType: default;"
                 + "margin: 6,16,6,16;");
     }
     
-    private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
         
         AdminFrame adminFrame = new AdminFrame();
         adminFrame.setVisible(true);
         
-        java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(adminLoginButton);
+        java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(loginButton);
         if (parentWindow != null) {
             parentWindow.dispose();
         }
         
-    }//GEN-LAST:event_adminLoginButtonActionPerformed
+    }//GEN-LAST:event_loginButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton adminLoginButton;
-    private javax.swing.JTextField adminPasswordField;
-    private javax.swing.JTextField adminUsernameField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton loginButton;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }
