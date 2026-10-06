@@ -5,6 +5,9 @@
 package presentation;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import java.awt.Container;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 import service.UserSession;
 
 /**
@@ -201,14 +204,31 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         // TODO add your handling code here:
-        UserSession.token = "";
-        new presentation.MainFrame().setVisible(true);
 
-        // 3. Dispose of the current frame
-        java.awt.Window topWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
-        if (topWindow != null) {
-            topWindow.dispose();
+        if (!UserSession.isLoggedIn()) {
+            JOptionPane.showMessageDialog(MainFrame.this, "Not currently logged in.");
+            return;
         }
+        
+        int confirm = JOptionPane.showConfirmDialog(
+                MainFrame.this,
+                "Are you sure you want to Logout?",
+                "Confirm Logout",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            UserSession.token = "";
+            new presentation.MainFrame().setVisible(true);
+
+            // 3. Dispose of the current frame
+            java.awt.Window topWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+            if (topWindow != null) {
+                topWindow.dispose();
+            }
+        }
+
+
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     /**
