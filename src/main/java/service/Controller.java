@@ -226,6 +226,20 @@ public class Controller {
             throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
         }
     }
+    
+    public void deleteReview(long reviewId) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/reviews/" + reviewId))
+                .header("Authorization", "Bearer " + UserSession.token)
+                .DELETE()
+                .build();
+        
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+    }
 
     public void deleteFood(long foodId) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()

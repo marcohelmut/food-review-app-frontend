@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import service.Controller;
 import service.Service;
 import com.formdev.flatlaf.FlatClientProperties;
+import dto.StallResponseDto;
 import service.UserSession;
 
 /**
@@ -27,6 +28,8 @@ public class FoodItemPanel extends javax.swing.JPanel {
     private final FoodResponseDto food;
     private final String stallName;
     private final Service service = new Service();
+
+    java.util.List<ReviewResponseDto> reviewlist;
 
     /**
      * Creates new form FoodItemPanel
@@ -126,6 +129,11 @@ public class FoodItemPanel extends javax.swing.JPanel {
 
         jLabel10.setText("Reviews:");
 
+        reviewList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reviewListMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(reviewList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -294,6 +302,7 @@ public class FoodItemPanel extends javax.swing.JPanel {
         try {
             // Retrieve reviews associated with this food ID from controller
             java.util.List<ReviewResponseDto> reviews = controller.getReviewsByFood(food.getId());
+            reviewlist = reviews;
 
             javax.swing.DefaultListModel<ReviewResponseDto> listModel = new javax.swing.DefaultListModel<>();
             for (ReviewResponseDto review : reviews) {
@@ -386,6 +395,48 @@ public class FoodItemPanel extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_deleteFoodButtonActionPerformed
+
+    private void reviewListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reviewListMouseClicked
+        // TODO add your handling code here:
+        // 1. Get the index based on where the mouse was clicked
+        int index = reviewList.locationToIndex(evt.getPoint());
+
+        // 2. Ensure an item exists at that location
+        if (index != -1) {
+            // 3. Verify the click was inside the actual item bounding box 
+            //    (prevents triggering when clicking empty space below list items)
+            if (reviewList.getCellBounds(index, index).contains(evt.getPoint())) {
+
+                // Access the ReviewResponseDto directly from your list model or list
+                ReviewResponseDto selectedReview = reviewlist.get(index);
+
+                // Do whatever you need with the selected review
+                System.out.println("Clicked Index: " + index);
+                System.out.println("Selected Review ID: " + selectedReview.getId());
+
+                if (UserSession.isLoggedIn()) {
+                    int confirm = JOptionPane.showConfirmDialog(
+                            FoodItemPanel.this,
+                            "Delete review?",
+                            "Confirm delete",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        try {
+                            controller.deleteReview(selectedReview.getId());
+                            loadReviews();
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error Deleting review", javax.swing.JOptionPane.ERROR_MESSAGE);
+                        } catch (InterruptedException ex) {
+                            JOptionPane.showMessageDialog(this, "The operation was interrupted.", "Operation Interrupted", javax.swing.JOptionPane.WARNING_MESSAGE);
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_reviewListMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
