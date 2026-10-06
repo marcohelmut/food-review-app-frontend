@@ -31,6 +31,8 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
     private Controller controller = new Controller();
     private String stallPhotoFilePath = "no_photo_attached";
     private String foodPhotoFilePath = "no_photo_attached";
+    
+    private StallResponseDto toUpdate;
 
     public AdminAddFoodPanel() {
         initComponents();
@@ -66,6 +68,9 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
         uploadFoodPhotoButton1 = new javax.swing.JButton();
         foodPhotoPanel = new javax.swing.JPanel();
         foodPhotoPreviewLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        updatedStallName = new javax.swing.JTextField();
+        updateStallNameButton = new javax.swing.JButton();
 
         jLabel1.setText("Name");
 
@@ -111,6 +116,13 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
         foodPhotoPanel.setLayout(new java.awt.BorderLayout());
         foodPhotoPanel.add(foodPhotoPreviewLabel, java.awt.BorderLayout.CENTER);
 
+        jLabel2.setText("Update Stall Name");
+
+        updatedStallName.addActionListener(this::updatedStallNameActionPerformed);
+
+        updateStallNameButton.setText("Update Stall Name");
+        updateStallNameButton.addActionListener(this::updateStallNameButtonActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,10 +149,13 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
                         .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(getStallButton)
-                                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE))
+                                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(updateStallNameButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(updatedStallName))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -167,7 +182,6 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
                                 .addComponent(uploadFoodPhotoButton1)))
                         .addGap(111, 111, 111))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addFoodButton)
                         .addGap(327, 327, 327))))
         );
@@ -214,13 +228,19 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
                         .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(addFoodButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE))
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(updatedStallName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(saveStall)
                         .addGap(105, 105, 105)))
-                .addComponent(clearFieldsButton)
-                .addGap(91, 91, 91))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(clearFieldsButton)
+                    .addComponent(updateStallNameButton))
+                .addGap(85, 85, 85))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -377,6 +397,8 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
 
         try {
             StallResponseDto returnedStall = controller.getStallByName(stallName);
+            toUpdate = returnedStall;
+            
             stallFieldForAddFood.setText(returnedStall.getName());
             stallIdField.setText(String.valueOf(returnedStall.getId()));
             JOptionPane.showMessageDialog(this, "Stall data retrieved.");
@@ -447,6 +469,31 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_stallFieldForAddFoodActionPerformed
 
+    private void updatedStallNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatedStallNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updatedStallNameActionPerformed
+
+    private void updateStallNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStallNameButtonActionPerformed
+        // TODO add your handling code here:
+        if (updatedStallName.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Please include a new stall name", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            toUpdate.setName(updatedStallName.getText());
+            StallResponseDto returnedStall = controller.updateStall(toUpdate);
+            
+            stallFieldForAddFood.setText(returnedStall.getName());
+            stallIdField.setText(String.valueOf(returnedStall.getId()));
+            JOptionPane.showMessageDialog(this, "Stall data Updated.");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error Updating Stall", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (InterruptedException ex) {
+            JOptionPane.showMessageDialog(this, "The operation was interrupted.", "Operation Interrupted", javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_updateStallNameButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFoodButton;
@@ -456,6 +503,7 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
     private javax.swing.JLabel foodPhotoPreviewLabel;
     private javax.swing.JButton getStallButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -467,6 +515,8 @@ public class AdminAddFoodPanel extends javax.swing.JPanel {
     private javax.swing.JTextField stallFieldForAddFood;
     private javax.swing.JTextField stallIdField;
     private javax.swing.JPanel stallPhotoPanel;
+    private javax.swing.JButton updateStallNameButton;
+    private javax.swing.JTextField updatedStallName;
     private javax.swing.JButton uploadFoodPhotoButton1;
     private javax.swing.JButton uploadStallPhotoButton;
     // End of variables declaration//GEN-END:variables

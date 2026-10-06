@@ -97,6 +97,25 @@ public class Controller {
 
         return mapper.readValue(response.body(), StallResponseDto.class);
     }
+    
+    public StallResponseDto updateStall(StallResponseDto stall) throws JsonProcessingException, IOException, InterruptedException {
+        String stallJson = mapper.writeValueAsString(stall);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/stalls"))
+                .header("Content-Type", "application/json")
+                .header("Accept", "application/json")
+                .header("Authorization", "Bearer " + UserSession.token)
+                .PUT(HttpRequest.BodyPublishers.ofString(stallJson))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+
+        return mapper.readValue(response.body(), StallResponseDto.class);
+    }
 
     public StallResponseDto getStallByName(String stallName) throws IOException, InterruptedException {
         String encodedStallName = URLEncoder.encode(stallName, StandardCharsets.UTF_8).replace("+", "%20");
