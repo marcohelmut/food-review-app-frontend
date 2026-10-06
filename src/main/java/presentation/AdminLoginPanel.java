@@ -185,21 +185,21 @@ public class AdminLoginPanel extends javax.swing.JPanel {
 
         try {
             controller.jwtToken = controller.login(username, password);
-            JOptionPane.showMessageDialog(this, controller.jwtToken, "Success", JOptionPane.ERROR_MESSAGE);
-            
-            MainFrame newMainFrame = new MainFrame();
-        newMainFrame.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Logged in successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-        // 2. Dispose of the parent frame
-        java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
-        if (parentWindow != null) {
-            parentWindow.dispose();
-        }
-            
+            MainFrame newMainFrame = new MainFrame();
+            newMainFrame.setVisible(true);
+
+            // 2. Dispose of the parent frame
+            java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+            if (parentWindow != null) {
+                parentWindow.dispose();
+            }
+
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Failed to load total food count: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to login: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (InterruptedException ex) {
-            JOptionPane.showMessageDialog(this, "Food count loading interrupted.", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to login.", "Warning", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_loginButtonActionPerformed
