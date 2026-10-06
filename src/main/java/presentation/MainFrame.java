@@ -5,23 +5,24 @@
 package presentation;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import service.UserSession;
 
 /**
  *
  * @author Marco
  */
 public class MainFrame extends javax.swing.JFrame {
-    
 
     /**
      * Creates new form MainPanel
      */
     public MainFrame() {
-        
+
         initComponents();
         setLocationRelativeTo(null);
         homeButtonActionPerformed(null);
-        
+        addFoodButton.setVisible(UserSession.isLoggedIn());
+
     }
 
     /**
@@ -65,6 +66,7 @@ public class MainFrame extends javax.swing.JFrame {
         addFoodButton.addActionListener(this::addFoodButtonActionPerformed);
 
         logoutButton.setText("Logout");
+        logoutButton.addActionListener(this::logoutButtonActionPerformed);
 
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
@@ -136,72 +138,84 @@ public class MainFrame extends javax.swing.JFrame {
                 + "buttonType: outline;"
                 + "margin: 8,14,8,14;");
     }
-    
+
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
         // TODO add your handling code here:
-        
+
         AdminLoginPanel adminLogin = new AdminLoginPanel();
-        
+
         mainPanel.removeAll();
         mainPanel.add(adminLogin);
         mainPanel.revalidate();
         mainPanel.repaint();
-        
+
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
         // TODO add your handling code here:
-        
+
         HomePanel home = new HomePanel();
-        
+
         mainPanel.removeAll();
         mainPanel.add(home);
         mainPanel.revalidate();
         mainPanel.repaint();
-        
+
     }//GEN-LAST:event_homeButtonActionPerformed
 
     private void rankingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rankingsButtonActionPerformed
         // TODO add your handling code here:
-        
+
         RankingsPanel rankings = new RankingsPanel();
-        
+
         mainPanel.removeAll();
         mainPanel.add(rankings);
         mainPanel.revalidate();
         mainPanel.repaint();
-        
+
     }//GEN-LAST:event_rankingsButtonActionPerformed
 
     private void stallsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stallsButtonActionPerformed
         // TODO add your handling code here:
-        
+
         StallsPanel stalls = new StallsPanel();
-        
+
         mainPanel.removeAll();
         mainPanel.add(stalls);
         mainPanel.revalidate();
         mainPanel.repaint();
-        
+
     }//GEN-LAST:event_stallsButtonActionPerformed
 
     private void addFoodButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFoodButtonActionPerformed
         // TODO add your handling code here:
-        
+
         AdminAddFoodPanel addFoodPanel = new AdminAddFoodPanel();
-        
+
         mainPanel.removeAll();
         mainPanel.add(addFoodPanel);
         mainPanel.revalidate();
         mainPanel.repaint();
-        
+
     }//GEN-LAST:event_addFoodButtonActionPerformed
+
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        // TODO add your handling code here:
+        UserSession.token = "";
+        new presentation.MainFrame().setVisible(true);
+
+        // 3. Dispose of the current frame
+        java.awt.Window topWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+        if (topWindow != null) {
+            topWindow.dispose();
+        }
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         com.formdev.flatlaf.FlatLightLaf.setup();
 
         /* Create and display the form */

@@ -27,14 +27,21 @@ import java.util.List;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class Controller {
 
     private final ObjectMapper mapper;
     private final String BASE_URL = "https://localhost:8443/api";
     private final HttpClient client;
+    public String jwtToken = "";
 
     public Controller() {
         this.client = createHttpsClient();
@@ -78,6 +85,7 @@ public class Controller {
                 .uri(URI.create(BASE_URL + "/stalls"))
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
+                .header("Authorization", "Bearer " + UserSession.token)
                 .POST(HttpRequest.BodyPublishers.ofString(stallJson))
                 .build();
 
@@ -173,6 +181,7 @@ public class Controller {
                 .uri(URI.create(BASE_URL + "/foods"))
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
+                .header("Authorization", "Bearer " + UserSession.token)
                 .POST(HttpRequest.BodyPublishers.ofString(foodJson))
                 .build();
 
@@ -191,6 +200,7 @@ public class Controller {
                 .uri(URI.create(BASE_URL + "/reviews"))
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
+                .header("Authorization", "Bearer " + UserSession.token)
                 .POST(HttpRequest.BodyPublishers.ofString(reviewJson))
                 .build();
 
@@ -206,6 +216,7 @@ public class Controller {
     public void deleteStall(long stallId) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/stalls/" + stallId))
+                .header("Authorization", "Bearer " + UserSession.token)
                 .DELETE()
                 .build();
 
@@ -219,6 +230,7 @@ public class Controller {
     public void deleteFood(long foodId) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/foods/" + foodId))
+                .header("Authorization", "Bearer " + UserSession.token)
                 .DELETE()
                 .build();
 
@@ -326,6 +338,82 @@ public class Controller {
         
         return mapper.readValue(response.body(), new TypeReference<List<FoodResponseDto>>() {
         });
+    }
+    
+    public String signup(String username, char[] password) throws IOException, InterruptedException {
+        String responseText;
+        
+        try {
+            // Build the request body payload
+            // Note: If you don't have a custom DTO class for User payload, Map<String, String> works seamlessly with Jackson
+            Map<String, String> payload = new HashMap<>();
+            payload.put("username", username);
+            payload.put("password", new String(password));
+
+            String jsonPayload = mapper.writeValueAsString(payload);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + "/v1/auth/signup")) // Update to BASE_URL + "/auth/signup" if mapped under /auth
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() < 200 || response.statusCode() >= 300) {
+                throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+            }
+
+            responseText = response.body();
+        } finally {
+            // Zero out password array from memory immediately for security
+            if (password != null) {
+                Arrays.fill(password, '\0');
+            }
+        }
+
+        return responseText;
+    }
+    
+    public String login(String username, char[] password) throws IOException, InterruptedException {
+        String token;
+
+        try {
+            // Build the JSON payload matching the backend's User class/body
+            Map<String, String> payload = new HashMap<>();
+            payload.put("username", username);
+            payload.put("password", new String(password));
+
+            String jsonPayload = mapper.writeValueAsString(payload);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + "/v1/auth/login")) // Adjust to BASE_URL + "/auth/login" if nested
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() < 200 || response.statusCode() >= 300) {
+                throw new IOException("HTTP Error " + response.statusCode() + ": " + response.body());
+            }
+
+            token = response.body();
+        } finally {
+            // Immediately overwrite password array in memory
+            if (password != null) {
+                Arrays.fill(password, '\0');
+            }
+        }
+        
+        if (token.startsWith("\"") && token.endsWith("\"") && token.length() > 1) {
+                token = token.substring(1, token.length() - 1);
+            }
+
+        UserSession.token = token;
+        return token;
     }
 
 }

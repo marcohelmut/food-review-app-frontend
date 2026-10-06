@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import service.Controller;
 import service.Service;
 import com.formdev.flatlaf.FlatClientProperties;
+import service.UserSession;
 
 /**
  *
@@ -34,6 +35,7 @@ public class FoodItemPanel extends javax.swing.JPanel {
         this.food = food;
         this.stallName = stallName;
         initComponents();
+        deleteFoodButton.setVisible(UserSession.isLoggedIn());
         setupFlatLafStyles();
 
         String foodName = food.getName();

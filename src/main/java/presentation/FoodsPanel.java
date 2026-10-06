@@ -33,6 +33,7 @@ import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import service.Controller;
+import service.UserSession;
 
 /**
  *
@@ -165,6 +166,7 @@ public class FoodsPanel extends javax.swing.JPanel {
 
         // 2. Create and configure your top-right button
         JButton topRightBtn = new JButton("Delete Stall");
+        topRightBtn.setVisible(UserSession.isLoggedIn());
         topRightBtn.putClientProperty(FlatClientProperties.STYLE, "arc: 8;"); // FlatLaf styling
         topRightBtn.addActionListener(e -> {
             // TODO: Add your button click action here
