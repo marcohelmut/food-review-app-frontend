@@ -219,13 +219,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         if (confirm == JOptionPane.YES_OPTION) {
             UserSession.token = "";
+            
+            MainFrame.this.dispose();
             new presentation.MainFrame().setVisible(true);
 
             // 3. Dispose of the current frame
-            java.awt.Window topWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+            /*java.awt.Window topWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
             if (topWindow != null) {
                 topWindow.dispose();
-            }
+            }*/
         }
 
 
